@@ -2,7 +2,7 @@
 This repository contains the meta information about the helpwave project.
 
 ## Content
-- [Conventions](/tree/main/conventions)
+- [Conventions](conventions)
 
 ## The repositories
 - [mobile-app](https://github.com/helpwave/mobile-app)
