@@ -6,6 +6,10 @@
   - [Branches](#branches)
   - [Commit messages](#commit-messages)
   - [Merge commits](#merge-commits)
+  - [Pull requests](#pull-requests)
+- [Rebasing](#rebasing)
+- [Code style](#code-style)
+  - [General](#general)
 
 ## Introduction
 This convention is a set of rules to be followed by all developers working on the project _helpwave_ and helps to
@@ -86,6 +90,7 @@ The description of a pull request should contain the following information:
 ```text
 Add the ability to create a new user
 
+This pull request optimizes the main README.md file
 This pull request adds the ability to create a new user.
 
 [#<issue-number](<issue-link>)
