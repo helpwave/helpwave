@@ -12,7 +12,7 @@ helpwave is an organization specialized in the development of software products 
 ## Our Story
 
 ### The Origin (2022, September)
-The initial spark for the later project "helpwave" was created at the Münsterhack 2022 (September 23/24, 2022). There, 13 members of the team got together at that time. At that time still with the initial idea of a coordination solution of the rescue system in the German-speaking area. Once immersed in this subject area, we were carried away by the possibilities of the innovation potential and the will and enthusiasm of the community in the healthcare sector. Quickly, more projects were added and the team grew more and more, both numerically and in terms of know-how.  
+The initial spark for the later project "helpwave" was created at the Münsterhack 2022 (September 23/24, 2022). There, 13 members of the team got together at that time, still with the initial idea of a coordination solution of the rescue system in the German-speaking area. Once immersed in this subject area, we were carried away by the possibilities of the innovation potential and the will and enthusiasm of the community in the healthcare sector. Quickly, more projects were added and the team grew more and more, both numerically and in terms of know-how.  
 
 ### Solution Enabler Program (2022, November)
 In November 2022 helpwave got chosen to become a part of the SEP (Solution Enabler Program) founded in context of the Münsterhack. This membership provided a big network and connections into the local clinic scene, two-weekly sprint meetings with supervision of startup-related topics, 1500€ support for helpwave in order to provide oxygen to the initial spark.
