@@ -8,7 +8,7 @@
   - [Merge commits](#merge-commits)
 
 ## Introduction
-This convention is a set of rules to be followed by all developers working on the project _helpwave_ and helps to
+This convention is a set of rules to be followed by all developers working on the project and repositories of _helpwave_ to help
 maintain a consistent code style.
 
 ## Git
@@ -16,15 +16,16 @@ maintain a consistent code style.
 The project uses the following branches:
 * `main` - the main branch, contains the latest stable version of the project
 * `issue/<issue-number>-<issue-name>` - a branch for a specific issue, where `<issue-number>` is the number of the issue
-and `<issue-name>` is the name of the issue
+and `<issue-name>` is the name of the issue.
 
 ### Commit messages
+The projects use the [Conventional Commits](http://conventionalcommits.org) scheme.
 Commit messages should be written in the following format:
 ```text
-<type>: <message>
+<type>[(<scope>)]: <message>
 ```
-where `<type>` is the type of the commit, `<issue-number>` is the number of the issue and `<message>` is the message of
-the commit.
+where `<type>` is the type of the commit, `<message>` is the message of
+the commit and `<scope>` represents an optional sub-part of the type.
 
 #### Type
 The type of the commit message should be one of the following:
@@ -37,11 +38,15 @@ The type of the commit message should be one of the following:
 * `chore` - updating build tasks, package manager configs, etc.; no production code change
 * `ci` - changes to the CI configuration files and scripts
 * `wip` - work in progress
+* `infra`
 
 #### Message
 The message of the commit should be written in the imperative, present tense: "change" not "changed" nor "changes". The
 first letter should not be capitalized. The message should **not** contain a dot (.) at the end.
-The maximum length of the message is 50 characters and the language should be English.
+The maximum length of the message is 50 characters and the language should be english.
+
+#### Scope
+The scope represents a sub-part of the project, like a specific microservice.
 
 #### Examples
 ```text
@@ -52,6 +57,9 @@ fix: fix the bug with the user creation
 ```
 ```text
 docs: add the documentation for the user creation
+```
+```text
+fix(infra): reduce costs
 ```
 
 ## Merge commits
@@ -88,7 +96,7 @@ Add the ability to create a new user
 
 This pull request adds the ability to create a new user.
 
-[#<issue-number](<issue-link>)
+Closes #<issue-number
 
 Testing instructions:
 1. Go to the user creation page
@@ -113,39 +121,7 @@ merge conflicts solved (#<pull-request-number>)
 A pull request should be reviewed by at least one other developer before it can be merged into the main branch.
 
 ## Releases
-### Versioning
-The project uses the [Semantic Versioning](https://semver.org/) scheme.
+*WIP*
 
-### Hotfixes
-If a bug is found in the latest stable version of the project, a hotfix branch should be created from the main branch.
-The hotfix branch should be named `hotfix/<issue-number>-<issue-name>`.
-This branch should be merged into the main branch and the latest stable version should be released.
-
-## Code style
-_This section is still under construction._
 ### General
-* The code and comments should be written in English.
-* For local convention tests, the pre-commit hook plugin husky should be used.
-
-### Git Hooks
-For local convention tests, the pre-commit hook plugin husky should be used.
-
-#### Husky for go
-##### Installation
-```bash
-go install github.com/automation-co/husky@latest
-```
-[…]
-
-##### Usage
-[…]
-
-#### Husky for TypeScript
-##### Installation
-```bash
-npm install husky --save-dev
-```
-[…]
-
-##### Usage
-[…]
+* The code and comments should be written in english.
