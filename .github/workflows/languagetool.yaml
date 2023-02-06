@@ -1,0 +1,15 @@
+name: LanguageTool
+
+on:
+  - pull_request
+
+jobs:
+
+  languagetool:
+    name: Check spelling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-languagetool@v1
+        with:
+          level: info
