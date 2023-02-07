@@ -1,151 +1,57 @@
-# Conventions for the project _helpwave_
+# The helpwave development workflow
 
-## Content
-- [Introduction](#introduction)
-- [Git](#git)
-  - [Branches](#branches)
-  - [Commit messages](#commit-messages)
-  - [Merge commits](#merge-commits)
+We developed a workflow to streamline the product development.
+The goal of this workflow is to combine out internal resources of the helpwave organization with the developers of the open-source community.
 
-## Introduction
-This convention is a set of rules to be followed by all developers working on the project _helpwave_ and helps to
-maintain a consistent code style.
+![Development Workflow v1](../assets/development_workflow_v1.png)
 
-## Git
-### Branches
-The project uses the following branches:
-* `main` - the main branch, contains the latest stable version of the project
-* `issue/<issue-number>-<issue-name>` - a branch for a specific issue, where `<issue-number>` is the number of the issue
-and `<issue-name>` is the name of the issue
+The workflow tries to reduce a feature of a product down to an issue for a developer.
+The helpwave community, customers or any kind of entity can request a feature or starts discuss
+of an idea in the [discussion-tab](https://github.com/helpwave/helpwave/discussions) of the helpwave/helpwave repository.
 
-### Commit messages
-Commit messages should be written in the following format:
-```text
-<type>: <message>
-```
-where `<type>` is the type of the commit, `<issue-number>` is the number of the issue and `<message>` is the message of
-the commit.
+A feature is a written specification that is written from the user's point of view.
+This specification should not contain any implementation details and can span across multiple projects.
+Out of the discussions and ideas, one of the product owners creates this [feature-issue](https://github.com/helpwave/helpwave/issues?q=is%3Aissue+is%3Aopen+label%3Afeature+) in the helpwave/helpwave repository.
 
-#### Type
-The type of the commit message should be one of the following:
-* `feat` - a new feature
-* `fix` - a bug fix
-* `docs` - changes to the documentation
-* `style` - formatting, missing semicolons, etc.; no code change
-* `refactor` - refactoring production code
-* `test` - adding tests, refactoring test; no production code change
-* `chore` - updating build tasks, package manager configs, etc.; no production code change
-* `ci` - changes to the CI configuration files and scripts
-* `wip` - work in progress
+When a new feature got created, the community can give feedback and discuss implementation details.
+After the definition-of-ready is reached and every unclarity was addressed,
+the maintainers break down the feature-issue into smaller implementation detail focused issues in their repositories of concern.
+The maintainers have the overall view of their repositories and act as a kind of codeowner to them.
+They create issues out of feature-issues, provide support for new developers and keeps the code on track.
 
-#### Message
-The message of the commit should be written in the imperative, present tense: "change" not "changed" nor "changes". The
-first letter should not be capitalized. The message should **not** contain a dot (.) at the end.
-The maximum length of the message is 50 characters and the language should be English.
+Every developer can now assign themselves to an issue and work towards the definition-of-done.
+If the issue modifies or defines an architectural foundation, the developer must write an [ADR](http://adr.github.io) to keep track of the decision process.
+When reached, a maintainer does quality-assurance against the feature-issue definition-of-done.
 
-#### Examples
-```text
-feat: add the ability to create a new user
-```
-```text
-fix: fix the bug with the user creation
-```
-```text
-docs: add the documentation for the user creation
-```
+## Approach the workflow as ...
 
-## Merge commits
-Merge commits from a feature branch to the main branch should be in the following format:
-```text
-Merge from 'issue/<issue-number>-<issue-name>' into main (#<pull-request-number>)
-```
-where `<issue-number>` is the number of the issue, `<issue-name>` is the name of the issue and `<pull-request-number>`
-is the number of the pull request.
-### Examples
-```text
-Merge from issue/1-add-the-ability-to-create-a-new-user into main (#1)
-```
-```text
-Merge from issue/2-fix-the-bug-with-the-user-creation into main (#2)
-```
-[…]
+### ... a maintainer
 
-## Pull requests
-### Title
-The title of a pull request should be broken down to a few words. In addition, special characters such as `[]\()/;+-*'`
-should be avoided.
+- Be an active part of the helpwave community
+- Join the slack, talk to other maintainers
+- Provide value and support to the developers
+- Take an eye on the issues and keep track of the overview
 
-### Description
-The description of a pull request should contain the following information:
-* A short description of the changes
-* A link to the issue
-* Testing instructions
-* Additional notes
+### ... a developer
 
-#### Examples
-```text
-Add the ability to create a new user
+- Take a look at the repositories for open issues
+- Self-Assign your issue of choice
+- Develop towards a solution
 
-This pull request adds the ability to create a new user.
+## Example
 
-[#<issue-number](<issue-link>)
+![Development Workflow v1 Example Product Owner](../assets/development_workflow_v1_example_product-owner.png)
 
-Testing instructions:
-1. Go to the user creation page
-2. Fill in the form
-3. Click on the button "Create user"
-4. Check that the user was created successfully in the database
+A product owner defines a feature-issue out of a meeting in the slack. The issue contains all necessary information
+to take conscious decision for the implementation.
 
-Additional notes:
-- The user creation page must be created first.
-- Then the user creation form must be created.
-```
+![Development Workflow v1 Example Maintainer](../assets/development_workflow_v1_example_maintainer.png)
 
-### Merge conflicts
-If a pull request has merge-conflicts, the main branch should be merged into the feature branch and the merge conflicts 
-should be resolved.
-The commit message of the merge commit should be in the following format:
-```text
-merge conflicts solved (#<pull-request-number>)
-```
+A maintainer of the mobile-app repository looks into the issue and sees how he and his repository can participate in the completion of the feature.
+The maintainer then creates an issue with implementation details.
 
-### Reviews
-A pull request should be reviewed by at least one other developer before it can be merged into the main branch.
+A developer now, self-assigns the issue and works towards the completion.
 
-## Releases
-### Versioning
-The project uses the [Semantic Versioning](https://semver.org/) scheme.
+---
 
-### Hotfixes
-If a bug is found in the latest stable version of the project, a hotfix branch should be created from the main branch.
-The hotfix branch should be named `hotfix/<issue-number>-<issue-name>`.
-This branch should be merged into the main branch and the latest stable version should be released.
-
-## Code style
-_This section is still under construction._
-### General
-* The code and comments should be written in English.
-* For local convention tests, the pre-commit hook plugin husky should be used.
-
-### Git Hooks
-For local convention tests, the pre-commit hook plugin husky should be used.
-
-#### Husky for go
-##### Installation
-```bash
-go install github.com/automation-co/husky@latest
-```
-[…]
-
-##### Usage
-[…]
-
-#### Husky for TypeScript
-##### Installation
-```bash
-npm install husky --save-dev
-```
-[…]
-
-##### Usage
-[…]
+- [Wiki](https://wiki.helpwave.de/s/c1724884-5c8c-4573-bf13-78efeb0c946b)
