@@ -63,20 +63,7 @@ fix(infra): reduce costs
 ```
 
 ## Merge commits
-Merge commits from a feature branch to the main branch should be in the following format:
-```text
-Merge from 'issue/<issue-number>-<issue-name>' into main (#<pull-request-number>)
-```
-where `<issue-number>` is the number of the issue, `<issue-name>` is the name of the issue and `<pull-request-number>`
-is the number of the pull request.
-### Examples
-```text
-Merge from issue/1-add-the-ability-to-create-a-new-user into main (#1)
-```
-```text
-Merge from issue/2-fix-the-bug-with-the-user-creation into main (#2)
-```
-[…]
+Merge commits should look like what github suggests in a pull request.
 
 ## Pull requests
 ### Title
