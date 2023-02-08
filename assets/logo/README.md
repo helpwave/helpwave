@@ -1,5 +1,5 @@
 # Our logo assets
-These logos/icons are free for use and are released under the [LICENSE](../../LICENSE) of this repository!
+These logos/icons are free for use and are released under the [LICENSE](../../LICENSE) of this repository!  
 You can download them or include them via the CDN. These links are updated with the latest designs.
 
 ## Main Icon
