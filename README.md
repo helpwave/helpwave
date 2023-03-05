@@ -23,6 +23,14 @@ We moved the rest of our story (until now) - [Click Here!](story/)
 ## The Vision
 Let's face the facts: Software does not have a good reputation in the medical sector. It is non-transparent, unwieldy, too complicated, and employees and patients have too little say. Especially the staff often (rightly) has the feeling that they are not involved in the development processes. The result is often software that is perceived as yet another adversary in the daily clinical routine, rather than as the necessary support. In addition, there is simply a lack of technical solutions in many places. The daily routine in hospitals is - as our team knows from own experience - frighteningly analog. At helpwave, we want to change that. Our vision is to put health professionals back in the driver's seat and develop the software they want and really need. At the end of this development process, we want a networked, communicative hospital that works for the employees and patients instead of having to be overcome. Less administration, more patient safety, optimization of workflows and thus more time for what is important: medical care that meets the demands of our time both technically and humanly.
 
+### Decision making
+At helpwave we consider the following values as our guidelines in every decision:
+- Transparency for customers, users, patients and interested parties
+- Agile development with daily improvements of the products
+- Full-scale integration of all stakeholders
+
+
+
 ## Our milestones
 ![milestones](assets/milestones.jpg)
 
