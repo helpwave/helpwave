@@ -1,4 +1,4 @@
-# Architecture decision records
+# [Architectural Decision Records](https://adr.github.io)
 
 ## General
 
@@ -9,7 +9,7 @@
 
 * [0002: API-Gateway](./0002-api-gateway.md)
 
-## Authn & Authz
+## AuthN & AuthZ
 
 * [0003: Keycloak as Identity Provider](./0003-keycloak-as-identity-provider.md)
 * [0004: Keycloak, user and names](./0004-keycloak-users-and-names.md)
