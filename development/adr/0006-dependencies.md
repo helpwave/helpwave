@@ -1,4 +1,4 @@
-# ADR-006: Dependencies
+# ADR-0006: Dependencies
 
 # **Dependencies**
 

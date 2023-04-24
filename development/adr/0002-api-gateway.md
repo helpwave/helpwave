@@ -1,4 +1,4 @@
-# ADR-002: API gateway
+# ADR-0002: API gateway
 
 # Choose an API gateway
 

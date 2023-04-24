@@ -1,4 +1,4 @@
-# ADR-003: Keycloak as Identity Provider
+# ADR-0003: Keycloak as Identity Provider
 
 # Keycloak as Identity Provider
 

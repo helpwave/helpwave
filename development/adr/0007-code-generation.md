@@ -1,4 +1,4 @@
-# ADR-007: code generation
+# ADR-0007: code generation
 
 # Protobuf Code Generation
 
