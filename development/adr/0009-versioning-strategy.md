@@ -1,4 +1,4 @@
-# **ADR-009: Versioning strategy**
+# **ADR-0009: Versioning strategy**
 
 ## Status
 
@@ -13,7 +13,6 @@ or for feature planing. This ADR is focused on the Git implementation of our ver
 ## Decision
 
 The base of every versioning strategy is the version number. We are using [Semantic Versioning 2.0.0](https://semver.org/) with version prefix of `v`.
-Our Git strategy is based on the branching and versioning strategy of [Dapr](https://github.com/dapr/dapr).
 
 - New changes are comitted to the `main` branch.
 - For every `MINOR` release, we create a new branch `release-v[MAJOR].[MINOR]` (_release branch_) based on the previous release on the same `MAJOR` track.
@@ -25,6 +24,20 @@ Our Git strategy is based on the branching and versioning strategy of [Dapr](htt
 - If a change needs to be made only for a specific version, it can be made on the release branch 
 
 ![](../../assets/versioning-strategy-visualization.png)
+_A representation of the described flow via https://git-school.github.io/visualizing-git/._ 
+- _blue_: tags
+- _orange_: branches
+- _red_: cherry-picks
+
+The development has taken place on `main`.
+The `release-v1.0` branch was created initially on commit `ghi` and tagged with `v1.0.0`.
+After this release, more commits were added. The commit `mno` of `main` was cherry-picked
+in `release-v1.0` and tagged with `v1.0.1` as a bugfix. The version specific bugfix was done with the `hotfix` commit
+and released as `v1.0.2`. `main` has evolved further with new backward compatible features and bugfixes.
+These new commits were merged in a newly created branch `release-v1.1` of `release-v1.0`.
+A new release was declared via the tag `v1.1.0`.
+
+Our Git strategy is based on the branching and versioning strategy of [Dapr](https://github.com/dapr/dapr).
 
 ## Consequences
 
