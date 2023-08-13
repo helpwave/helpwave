@@ -22,7 +22,7 @@ Our Git strategy is based on the branching and versioning strategy of [Dapr](htt
 - When ready to ship, the latest commit on a release branch is tagged `v[MAJOR].[MINOR].[PATCH]` based on the version number.
 - A tag of a commit on the release branch indicates a released version.
 - If a Bugfix needs to take place for all versions, the fix can be made against the `main` branch and cherry-picked into the release branches.
-- If a Bugfix needs to take place only for a specific version, this fix can be made against the release branch. 
+- If a change needs to be made only for a specific version, it can be made on the release branch 
 
 ![](../../assets/versioning-strategy-visualization.png)
 
