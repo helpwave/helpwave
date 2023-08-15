@@ -5,7 +5,7 @@
 
 ## Status
 
-Propsed
+Accepted
 
 ## Context
 
