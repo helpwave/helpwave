@@ -18,6 +18,7 @@ The base of every versioning strategy is the version number. We are using [Seman
 - For every `MINOR` release, we create a new branch `release-v[MAJOR].[MINOR]` (_release branch_) based on the previous release on the same `MAJOR` track.
 - New changes for the release branch are either merged or cherry-picked from `main`.
 - The version of the software on a release branch, until tagged, is called pre-release.
+  Continues tagging of the pre-release commits is optional and is at the discretion of the particular implementation of the repository.
 - When ready to ship, the latest commit on a release branch is tagged `v[MAJOR].[MINOR].[PATCH]` based on the version number.
 - A tag of a commit on the release branch indicates a released version.
 - If a Bugfix needs to take place for all versions, the fix can be made against the `main` branch and cherry-picked into the release branches.
