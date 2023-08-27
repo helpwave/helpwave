@@ -21,7 +21,10 @@ The base of every versioning strategy is the version number. We are using [Seman
 - When ready to ship, the latest commit on a release branch is tagged `v[MAJOR].[MINOR].[PATCH]` based on the version number.
 - A tag of a commit on the release branch indicates a released version.
 - If a Bugfix needs to take place for all versions, the fix can be made against the `main` branch and cherry-picked into the release branches.
-- If a change needs to be made only for a specific version, it can be made on the release branch 
+- If a change needs to be made only for a specific version, it can be made on the release branch. 
+- If a repository needs separate releases (monorepo), the SemVer version gets prefixed by the package name seperated via `@`.
+  - Tag: `landing-page@v1.0.0`
+  - Branch: `release-landing-page@v1.2.3`
 
 ![](../../assets/versioning-strategy-visualization.png)
 _A representation of the described flow via https://git-school.github.io/visualizing-git/._ 
