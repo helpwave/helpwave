@@ -28,7 +28,7 @@ The physical activity level (PAL[^PAL]) should be used to evaluate the activity 
 | 1,8 - 1,9 | Mostly walking and standing work                         | Salesperson, waiter, craftsman                   |
 | 2,0 - 2,4 | Physically demanding job or very active leisure activity | Construction worker, farmer, competitive athlete |
 
-### Mental health
+#### Mental health
 
 > Disclaimer: This app will not replace a professional psychologist.
 
@@ -54,7 +54,7 @@ The physical activity level (PAL[^PAL]) should be used to evaluate the activity 
 
 ## Mental health
 
----
+
 ## Technology
 
 - GraphQL
