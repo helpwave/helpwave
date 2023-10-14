@@ -10,6 +10,18 @@ The aim of helpwave impulse is to reduce the load on the health care sector by h
 
 ### Understanding the individual needs
 
+#### Nutrition
+
+
+
+#### Fitness
+
+
+
+### Mental health
+
+
+
 ### Baseline Tasks (Daily's)
 
 ### Challenge Tasks
