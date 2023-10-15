@@ -52,7 +52,7 @@ There should be the possibility to create teams for individual users. A user sho
 
 #### Company
 
-Companies should have the ability to create company teams for their business health management. It is import that now information of a user is visible to the company itself. This teams should be used for extra challenges or activities that are company related.
+Companies should have the ability to create company teams for their business health management. It is import that now information of a user is visible to the company itself. These teams should be used for extra challenges or activities that are company related.
 
 Another extension to this is management of company organized sports courses. This for example includes the displaying of all necessary information for the course or the registration of a user.
 
