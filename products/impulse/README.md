@@ -64,11 +64,13 @@ There are two different achievement types. The first one is the level which corr
 
 ### Rewards
 
-
+Rewards are things that a user could win from a third party by matching certain criteria. Criteria can be the score, location or city of a user, a company team or completing special challenges. The most useful thing would be some sort of digital coupons.
 
 ### Content creation
 
+The baseline task and some challenges need to be created be the helpwave team. To assist the creating of task conversational ai could be used to reduce the time that is needed.
 
+Apart from that are three other parties that could contribute task to helpwave impulse. The first are cities and their sport and health department that could contribute localized challenges that are specific to the city. The second party are companies that could company specific challenges as part of their company health management. Both could contribute nutrition and fitness related challenges. The other party that could contribute are individuals. This contribution must be curated so that they meet the standards. The curation can also be handled by the community or the helpwave team. This could also strength the open-source community around helpwave. 
 
 ## Questionnaire
 
@@ -79,11 +81,8 @@ There are two different achievement types. The first one is the level which corr
 ### Mental health
 
 
-## Technology
-
-- GraphQL
-- SSO (Ory)
-
+## You want to know more?
+- [Technology](./technology.md)
 
 [^Nutrition]: https://www.dge.de/gesunde-ernaehrung/dge-ernaehrungsempfehlungen/10-regeln/en/
 [^PAL]: https://www.dge.de/gesunde-ernaehrung/faq/energiezufuhr/#c2969
