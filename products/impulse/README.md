@@ -16,11 +16,11 @@ In the following context this information is referred to as lifestyle profile of
 
 #### Nutrition
 
-As a reference for the Questions for the nutrition [^Nutrition] the guidelines of the DGE should be followed.
+As a reference for the Questions for the nutrition[^Nutrition] the guidelines of the DGE should be followed.
 
 #### Fitness
 
-The physical activity level (PAL [^PAL]) should be used to evaluate the activity level of a user. By knowing this a suitable baseline of activity could be inferred for a user.
+The physical activity level (PAL[^PAL]) should be used to evaluate the activity level of a user. By knowing this a suitable baseline of activity could be inferred for a user.
 
 | PAL-Value | activity level                                           | example                                          |
 |-----------|----------------------------------------------------------|--------------------------------------------------|
