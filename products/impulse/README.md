@@ -85,5 +85,5 @@ There are two different achievement types. The first one is the level which corr
 - SSO (Ory)
 
 
-[^Nutrition](https://www.dge.de/gesunde-ernaehrung/dge-ernaehrungsempfehlungen/10-regeln/en/)
-[^PAL](https://www.dge.de/gesunde-ernaehrung/faq/energiezufuhr/#c2969)
+[^Nutrition]: https://www.dge.de/gesunde-ernaehrung/dge-ernaehrungsempfehlungen/10-regeln/en/
+[^PAL]: https://www.dge.de/gesunde-ernaehrung/faq/energiezufuhr/#c2969
