@@ -10,7 +10,9 @@ The aim of helpwave impulse is to reduce the load on the health care sector by h
 
 ### Understanding the individual needs
 
-A short Questionnaire should used to evaluate the needs of a healthier lifestyle for a person. This is import because each person has an individual lifestyle which creates the problem to choose the right task to great a healthier baseline. The Questions should evaluate the needs in the dimension’s nutrition, fitness and mental health. A person should not be encouraged to appropriate bad behaviour related to their lifestyle with this app.
+A short Questionnaire should used to evaluate the needs of a healthier lifestyle for a user. This is import because each user has an individual lifestyle which creates the problem to choose the right task to great a healthier baseline. The Questions should evaluate the needs in the dimension’s nutrition, fitness and mental health. A user should not be encouraged to appropriate bad behaviour related to their lifestyle with this app.
+
+In the following context this information is referred to as lifestyle profile of a user.
 
 #### Nutrition
 
@@ -18,7 +20,7 @@ As a reference for the Questions for the nutrition[^Nutrition] the guidelines of
 
 #### Fitness
 
-The physical activity level (PAL[^PAL]) should be used to evaluate the activity level of a person. By knowing this a suitable baseline of activity could be inferred for a person.
+The physical activity level (PAL[^PAL]) should be used to evaluate the activity level of a user. By knowing this a suitable baseline of activity could be inferred for a user.
 
 | PAL-Value | activity level                                           | example                                          |
 |-----------|----------------------------------------------------------|--------------------------------------------------|
@@ -32,27 +34,49 @@ The physical activity level (PAL[^PAL]) should be used to evaluate the activity 
 
 > Disclaimer: This app will not replace a professional psychologist.
 
+The app should evaluate the mental condition of a user. This is important so that the app isn’t overwhelming the user with the baseline tasks. 
+
 ### Baseline Tasks (Daily's)
 
+The baseline tasks are tasks that should be done every day to improve the lifestyle of a user. These tasks should be derived from the information which is given be the questionnaire. So that only relevant task that would improve the lifestyle would be chosen.
 
+Every baseline task should have information why it was selected for a user. There should also be information displayed on why this task is imported, so that there is a possible learning from the app.
 
 ### Challenge Tasks
 
+Challenge Tasks are Tasks that are used motivate users to keep going and bring some variety to the app. These Challenges could include nutrition or fitness tasks. These challenges should also fit the lifestyle profile of a user.
 
+### Teams
+
+There should be the possibility to create teams for individual users. A user should also be part of implicit teams that are based on the location. Examples are city-based teams. 
+
+#### Company
+
+Companies should have the ability to create company teams for their business health management. It is import that now information of a user is visible to the company itself. This teams should be used for extra challenges or activities that are company related.
+
+Another extension to this is management of company organized sports courses. This for example includes the displaying of all necessary information for the course or the registration of a user.
+
+### Achievements
+
+To add some gamification aspects to the app to let the user keep going the app should have an individual score with virtual achievements. This means that every task that is complete will give the user a certain number of points. The baseline tasks should give more points because they are more important than the challenges and the points from challenges should be caped to a maximum per day. As a result, no one should be encouraged to prefer the challenges over the baseline task in respect to the points gained. 
+
+There are two different achievement types. The first one is the level which corresponds to a certain score. The needed score for an achievement should raise linear. The other achievement type is for certain challenges. 
 
 ### Rewards
 
 
 
-### Content
+### Content creation
+
+
 
 ## Questionnaire
 
-#### Nutrition
+### Nutrition
 
 ### Fitness
 
-## Mental health
+### Mental health
 
 
 ## Technology
