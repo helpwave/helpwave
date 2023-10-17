@@ -4,7 +4,7 @@ This document includes all the necessary information to understand the idea and 
 
 ## The idea
 
-The aim of helpwave impulse is to reduce the load on the health care sector by helping people to live a healthier lifestyle. This will reduce or delay the occurrence of illness, which leads to a more sustainable population. Healthier in this context means an improvement of the nutrition, fitness or mental health.
+The aim of helpwave impulse is to reduce the load on the health care sector by helping people to live a healthier lifestyle. This will reduce the occurrence of illness, which leads to a more sustainable population. Healthier in this context means an improvement of the nutrition, fitness or mental health.
 
 ## The concept
 
@@ -68,9 +68,12 @@ Rewards are some sort of physical or digital goods from third-parties of the app
 
 ### Content creation
 
-The baseline task and some challenges need to be created be the helpwave team. To assist the creating of task conversational ai could be used to reduce the time that is needed.
+There are four parties who provide the content of helpwave impulse. The first party is helpwave itself. We should provide the baseline task and some challenges to start with. To assist the creating of task conversational ai could be used to reduce the time that is needed.
 
-Apart from that are three other parties that could contribute task to helpwave impulse. The first are cities and their sport and health department that could contribute localized challenges that are specific to the city. The second party are companies that could company specific challenges as part of their company health management. Both could contribute nutrition and fitness related challenges. The other party that could contribute are individuals. This contribution must be curated so that they meet the standards. The curation can also be handled by the community or the helpwave team. This could also strength the open-source community around helpwave. 
+The second party are government interactors like cities and their sport and health department that could contribute localized challenges that are specific to the city. Examples could be city events or Challenges that are based on local conditions. The third party are verified content creator. This group consists of individuals and companies. Companies can contribute challenges as part of their company health management. Company challenges should have the possibility to only appear in company in the corresponding company team.
+
+The last group that can contribute to the challenges are individual users of the app. These contributions must be curated so that they meet the standards. The curation can also be handled by the community or the helpwave team. This could also strength the open-source community around helpwave. Every non first party an only contribute challenges for nutrition and fitness.
+
 
 ## Questionnaire
 
