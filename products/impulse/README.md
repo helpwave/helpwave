@@ -60,7 +60,7 @@ Another extension to this is management of company organized sports courses. Thi
 
 To add some gamification aspects to the app to let the user keep going the app should have an individual score with virtual achievements. For every completed task, the user is gaining a more points, based on the task. The baseline tasks should give more points because they are more important than the challenges and the points from challenges should be caped to a maximum per day. As a result, no one should be encouraged to prefer the challenges over the baseline task in respect to the points gained. 
 
-There are two different achievement types. The first one is the level which corresponds to a certain score. The needed score for an achievement should raise linear. The other achievement type is for certain challenges. 
+There are two different achievement types. The first one is the level which corresponds to a certain score. The needed score for an achievement should raise linear. The other achievement type is for certain challenges. Examples could be challenges with a long duration of for example one week or the attending on a special local event.
 
 ### Rewards
 
