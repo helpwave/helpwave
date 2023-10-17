@@ -64,7 +64,7 @@ There are two different achievement types. The first one is the level which corr
 
 ### Rewards
 
-Rewards are things that a user could win from a third party by matching certain criteria. Criteria can be the score, location or city of a user, a company team or completing special challenges. The most useful thing would be some sort of digital coupons.
+Rewards are some sort of physical or digital goods from third-parties of the app. Most likely, the rewards are in the context of a location/city of the user. If a challenge is part of a company, the company should be able to define there own reward.
 
 ### Content creation
 
