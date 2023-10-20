@@ -4,13 +4,13 @@ This document includes all the necessary information to understand the idea and 
 
 ## The idea
 
-The aim of helpwave impulse is to reduce the load on the health care sector by helping people to live a healthier lifestyle. This will reduce the occurrence of illness, which leads to a more sustainable population. Healthier in this context means an improvement of the nutrition, fitness or mental health.
+The aim of helpwave impulse is to reduce the load on the health care sector by helping people to live a healthier lifestyle. this will reduce the burden of disease, which leads to increased public health. Healthier in this context means an improvement of the nutrition, fitness or mental health.
 
 ## The concept
 
 ### Understanding the individual needs
 
-A short Questionnaire should used to evaluate the needs of a healthier lifestyle for a user. This is import because each user has an individual lifestyle which creates the problem to choose the right task to great a healthier baseline. The Questions should evaluate the needs in the dimension’s nutrition, fitness and mental health. A user should not be encouraged to appropriate bad behaviour related to their lifestyle with this app.
+A short Questionnaire is used to evaluate the needs of a healthier lifestyle for a user. This is important because each user has an individual lifestyle which creates the problem to choose the right task to increase personal health. The Questions should evaluate the needs in the dimensions nutrition, fitness and mental health. A user should not be encouraged to pick up unhealthy behaviour related to their lifestyle with this app.
 
 In the following context this information is referred to as lifestyle profile of a user.
 
@@ -36,9 +36,9 @@ The physical activity level (PAL[^PAL]) should be used to evaluate the activity 
 
 The app should evaluate the mental condition of a user. This is important so that the app isn’t overwhelming the user with the baseline tasks. 
 
-### Baseline Tasks (Daily's)
+### Baseline Tasks (Dailys)
 
-The baseline tasks are tasks that should be done every day to improve the lifestyle of a user. These tasks should be derived from the information which is given be the questionnaire. So that only relevant task that would improve the lifestyle would be chosen.
+The baseline tasks are tasks that should be done every day to improve the lifestyle of a user. These tasks should be derived from the information which is given be the questionnaire. So that only relevant tasks will be chosen for the user.
 
 Every baseline task should have information why it was selected for a user. There should also be information displayed on why this task is imported, so that there is a possible learning from the app.
 
