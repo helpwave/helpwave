@@ -32,7 +32,7 @@ The physical activity level (PAL[^PAL]) should be used to evaluate the activity 
 
 #### Mental health
 
-> Disclaimer: This app will not replace a professional psychologist.
+> Disclaimer: This app will not replace a professional psychologist. Also, this feature is not relevant for the mvp phase.
 
 The app should evaluate the mental condition of a user. This is important so that the app isn’t overwhelming the user with the baseline tasks. 
 
