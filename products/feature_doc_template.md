@@ -62,6 +62,7 @@
     - Identify competitors with software products that address a similar customer need. 
         - If possible, include screenshots of the product.
         - What are advantages and disadvantages of their approach?
+        - What are we intending to do differently, what is our "secret sauce" in the feature?
 
 ## 12. Additional Information:
 
