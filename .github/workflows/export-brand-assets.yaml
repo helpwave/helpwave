@@ -1,0 +1,55 @@
+name: Export brand assets
+
+on:
+  push:
+    paths:
+      - "brand/**"
+      - "scripts/export-brand-assets.sh"
+      - "scripts/check-brand-svgs.sh"
+      - "scripts/check-brand-export-drift.sh"
+      - ".github/workflows/export-brand-assets.yaml"
+  pull_request:
+    paths:
+      - "brand/**"
+      - "scripts/export-brand-assets.sh"
+      - "scripts/check-brand-svgs.sh"
+      - "scripts/check-brand-export-drift.sh"
+      - ".github/workflows/export-brand-assets.yaml"
+  workflow_dispatch:
+
+jobs:
+  export:
+    name: Verify PNG and ICO exports
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install export tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin imagemagick
+          command -v rsvg-convert
+          command -v convert
+          convert -version | head -n 1
+
+      - name: Regenerate PNG and ICO exports from SVG sources
+        run: ./scripts/export-brand-assets.sh
+
+      - name: Check SVG cutouts, square PNGs, and ICOs
+        run: ./scripts/check-brand-svgs.sh
+
+      - name: Fail if committed exports drift from SVG sources
+        run: ./scripts/check-brand-export-drift.sh
+
+      - name: Pack brand kit
+        run: |
+          mkdir -p /tmp/brand-kit
+          cp -a brand/helpwave brand/app-zum-doc brand/README.md /tmp/brand-kit/
+          tar -C /tmp -czf brand-kit.tar.gz brand-kit
+
+      - name: Upload brand kit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: brand-kit
+          path: brand-kit.tar.gz
+          if-no-files-found: error

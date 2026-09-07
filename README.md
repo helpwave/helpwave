@@ -1,45 +1,89 @@
-# Welcome to helpwave 👋
+# helpwave
 
-This documentation includes all the necessary information to understand helpwave's history, vision and goals.
-It will also give you a tutorial on how to get started with helpwave, so you can start contributing right away.
+<p align="center">
+  <img src="brand/helpwave/svg/mark.svg" alt="helpwave mark" width="160" />
+</p>
 
-The longer you read, the more detailed and specific these descriptions become.
-So just choose your own level of interest.
+**Open healthcare operations platform for Europe.**
 
-## Who are we?
-helpwave is an organization specialized in the development of software products in the medical and clinical field. The unique selling point is the open design and the company concept, which puts Transparent (Open-Book Management) and Open-Source development in the foreground. The core team of helpwave is young and characterized by different backgrounds from the technical and medical field. The passion for good and uncomplicated software is part of the core philosophy of helpwave. Thus, long and complicated work on tasks should be avoided and simplified by agile development processes. Our vision is to develop simple, intuitive and appealing software products not for, but with medical staff and patients. We want to be the ones to enable medical staff to implement what they have long wanted. Together, at the grassroots, for the people.
+helpwave maps real clinical workflows, surfaces hidden bottlenecks, and helps teams rebuild processes so every shift gets faster, safer, and more aligned. Open-source · modular · live in ambulatory and stationary care.
 
-## Our Story
+[Website](https://helpwave.de) · [Products](https://helpwave.de/products) · [Contact](https://helpwave.de/contact) · [Legal](https://helpwave.de/legal)
 
-### The Origin (2022, September)
-The initial spark for the later project "helpwave" was created at the Münsterhack 2022 (September 23/24, 2022). There, 13 members of the team got together at that time, still with the initial idea of a coordination solution of the rescue system in the German-speaking area. Once immersed in this subject area, we were carried away by the possibilities of the innovation potential and the will and enthusiasm of the community in the healthcare sector. Quickly, more projects were added and the team grew more and more, both numerically and in terms of know-how.  
+---
 
-### Solution Enabler Program (2022, November)
-In November 2022 helpwave got chosen to become a part of the SEP (Solution Enabler Program) founded in context of the Münsterhack. This membership provided a big network and connections into the local clinic scene, two-weekly sprint meetings with supervision of startup-related topics, 1500€ support for helpwave in order to provide oxygen to the initial spark.
+## Quick links
 
-### Find out more!
-We moved the rest of our story (until now) - [Click Here!](story/)
+| Need | Go here |
+|------|---------|
+| Logos & brand kits | [`brand/`](brand/) |
+| Marketing media | [`marketing/`](marketing/) |
+| Product overview | [`products/`](products/) |
+| Company & team | [`company/`](company/) |
+| App zum Doc | [app-zum-doc.de](https://app-zum-doc.de) · [`brand/app-zum-doc/`](brand/app-zum-doc/) |
 
-## The Vision
-Let's face the facts: Software does not have a good reputation in the medical sector. It is non-transparent, unwieldy, too complicated, and employees and patients have too little say. Especially the staff often (rightly) has the feeling that they are not involved in the development processes. The result is often software that is perceived as yet another adversary in the daily clinical routine, rather than as the necessary support. In addition, there is simply a lack of technical solutions in many places. The daily routine in hospitals is - as our team knows from own experience - frighteningly analog. At helpwave, we want to change that. Our vision is to put health professionals back in the driver's seat and develop the software they want and really need. At the end of this development process, we want a networked, communicative hospital that works for the employees and patients instead of having to be overcome. Less administration, more patient safety, optimization of workflows and thus more time for what is important: medical care that meets the demands of our time both technically and humanly.
+---
 
-### Decision making
-At helpwave we consider the following values as our guidelines in every decision:
-- Transparency for customers, users, patients and interested parties
-- Agile development with daily improvements of the products
-- Full-scale integration of all stakeholders
+## Products
 
+| Product | Role |
+|---------|------|
+| **helpwave intelligence** | Foundation layer — workflow mapping, bottleneck detection, open APIs |
+| **helpwave tasks** | Bedside task & ward management aligned to SOPs |
+| **helpwave scaffold** | Visual org-structure editor (networks → beds, teams, roles) |
+| **helpwave id** | Healthcare identity — SSO, MFA, role-aware access |
+| **helpwave analytics** | Operational intelligence from clinical events |
+| **helpwave assistant** | AI co-pilot (closed trial — not generally available) |
+| **helpwave netmanager** | MVZ & KBV Praxisnetz management |
+| **App zum Doc** | End-to-end encrypted patient–practice channel |
+| **helpwave lab** | Interoperability sandbox for vendors and clinics |
 
+Full descriptions: [`products/README.md`](products/README.md)
 
-## Our milestones
-![milestones](assets/milestones.jpg)
+---
 
-## Community
-The open source and health community is indispensable for the project. Every step, every meeting and every idea is publicly documented, discussed and made transparent. helpwave focuses on: "For the common good, through community".
-Software products should no longer be created for purely financial reasons, but out of an intrinsically motivated sense of commitment to the common good.
+## Brand assets
 
-## You want to know more?
-- [Our Onboarding Documentation](onboarding/)
-- [Development Documentation](development/)
-- [Media Files and Logo](assets/logo/)
-- [Our Products](products/)
+SVG is the source of truth. PNG exports for every variant live next to them and are regenerated by CI.
+
+- helpwave: [`brand/helpwave/`](brand/helpwave/) — mark, circle, banners · black / white · on white / on black
+- App zum Doc: [`brand/app-zum-doc/`](brand/app-zum-doc/) — color, monochrome, icon, circle presentations
+
+```text
+brand/helpwave/svg/mark.svg
+brand/helpwave/png/1024/mark.png
+brand/helpwave/ico/mark.ico
+brand/app-zum-doc/svg/logo-color.svg
+brand/app-zum-doc/png/1024/logo-color.png
+brand/app-zum-doc/ico/logo-color.ico
+```
+
+Regenerate locally (needs `rsvg-convert` / librsvg and ImageMagick `convert` or `magick`; Ubuntu apt matches CI):
+
+```bash
+./scripts/check-brand-svgs.sh
+./scripts/export-brand-assets.sh
+```
+
+SVGs are tight cutouts. PNGs use common sizes (`16`–`1024`): square for icons/circles, natural aspect for marks and banners. Square assets also get a multi-resolution `.ico`. helpwave ships transparent, on-white, and inverted (on-black) logo variants.
+
+---
+
+## Open source
+
+| Repository | Purpose |
+|------------|---------|
+| [helpwave/tasks](https://github.com/helpwave/tasks) | Clinical tasks & ward management |
+| [helpwave/scaffold](https://github.com/helpwave/scaffold) | Organization structure editor |
+| [helpwave/hightide](https://github.com/helpwave/hightide) | Shared React design system |
+| [helpwave/legal](https://github.com/helpwave/legal) | Public legal documents |
+
+Code in this organization is typically licensed under the [Mozilla Public License 2.0](LICENSE). **Logos, wordmarks, and product names are trademarks of helpwave GmbH** and are not granted by the MPL — see [`brand/README.md`](brand/README.md).
+
+---
+
+## Get in touch
+
+- Product & demos: [christian.porschen@helpwave.de](mailto:christian.porschen@helpwave.de)
+- General: [contact@helpwave.de](mailto:contact@helpwave.de)
+- Based in **Aachen & Münster**, Germany · [helpwave.de/about](https://helpwave.de/about) · [helpwave.de/contact](https://helpwave.de/contact) · [Imprint](https://helpwave.de/imprint)
