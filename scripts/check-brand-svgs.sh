@@ -6,6 +6,7 @@ cd "$ROOT"
 
 python3 <<'PY'
 from pathlib import Path
+import os
 import re
 import sys
 import subprocess
@@ -13,9 +14,19 @@ import tempfile
 
 SVG_PAD_TOL = 0.04
 PNG_SIZE_TOL = 1
-PNG_SIZES = [16, 32, 48, 64, 128, 180, 192, 256, 512, 1024]
-ICO_SIZES = [16, 32, 48, 64, 128, 256]
-SQUARE_RATIO_TOL = 0.08
+DEFAULT_SIZES = [16, 32, 48, 64, 128, 180, 192, 256, 512, 1024]
+
+
+def size_list(name: str, fallback: list[int]) -> list[int]:
+    raw = os.environ.get(name, '').strip()
+    if not raw:
+        return list(fallback)
+    return [int(part) for part in raw.split()]
+
+
+SIZES = size_list('SIZES', DEFAULT_SIZES)
+PNG_SIZES = size_list('PNG_SIZES', SIZES)
+ICO_SIZES = size_list('ICO_SIZES', SIZES)
 
 
 def resolve_im() -> str:
@@ -64,16 +75,14 @@ def viewbox(svg: Path) -> tuple[float, float]:
     return float(vb.group(3)), float(vb.group(4))
 
 
-def is_square_export(base: str, vw: float, vh: float) -> bool:
-    if base.startswith('circle') or base.startswith('icon'):
-        return True
-    return max(vw, vh) / min(vw, vh) <= 1.0 + SQUARE_RATIO_TOL
+def is_quadratic(vw: float, vh: float) -> bool:
+    return abs(vw - vh) <= max(vw, vh) * 1e-4
 
 
-def expected_png_size(vw: float, vh: float, size: int, square: bool) -> tuple[int, int]:
-    if square:
+def expected_png_size(vw: float, vh: float, size: int, kind: str) -> tuple[int, int]:
+    if kind == 'logo':
         return size, size
-    scale = size / max(vw, vh)
+    scale = size / min(vw, vh)
     return max(1, int(round(vw * scale))), max(1, int(round(vh * scale)))
 
 
@@ -156,69 +165,95 @@ def svg_padding(svg: Path):
 
 failures = []
 checked_svg = 0
-assets: list[tuple[str, str, float, float, bool]] = []
+assets: list[tuple[str, str, str, float, float]] = []
 
-for svg in sorted(Path('brand').rglob('svg/*.svg')):
-    checked_svg += 1
-    brand = svg.parts[1]
-    base = svg.stem
-    try:
-        (vw, vh), pads = svg_padding(svg)
-    except Exception as exc:
-        failures.append(f'{svg}: {exc}')
-        continue
-    if max(pads) > SVG_PAD_TOL:
-        failures.append(
-            f'{svg}: not a minimal cutout '
-            f'(padding LTRB={[f"{p:.1%}" for p in pads]}, viewBox={vw:.0f}x{vh:.0f})'
-        )
-    square = is_square_export(base, vw, vh)
-    assets.append((brand, base, vw, vh, square))
+for kind in ('logo', 'banner'):
+    for svg in sorted(Path('brand').glob(f'*/{kind}/svg/*.svg')):
+        checked_svg += 1
+        brand = svg.parts[1]
+        base = svg.stem
+        try:
+            (vw, vh), pads = svg_padding(svg)
+        except Exception as exc:
+            failures.append(f'{svg}: {exc}')
+            continue
+        if max(pads) > SVG_PAD_TOL:
+            failures.append(
+                f'{svg}: not a minimal cutout '
+                f'(padding LTRB={[f"{p:.1%}" for p in pads]}, viewBox={vw:.0f}x{vh:.0f})'
+            )
+        quadratic = is_quadratic(vw, vh)
+        if kind == 'logo' and not quadratic:
+            failures.append(
+                f'{svg}: logo SVG must be quadratic (viewBox={vw:.2f}x{vh:.2f})'
+            )
+        if kind == 'banner' and quadratic:
+            failures.append(
+                f'{svg}: quadratic SVG belongs in logo/, not banner/'
+            )
+        assets.append((brand, kind, base, vw, vh))
+
+for leftover in sorted(Path('brand').glob('*/*')):
+    if leftover.is_dir() and leftover.name in {'svg', 'png', 'ico'}:
+        failures.append(f'{leftover}: use logo/ or banner/ instead of {leftover.name}/')
 
 checked_png = 0
-for brand, base, vw, vh, square in assets:
+for brand, kind, base, vw, vh in assets:
     for size in PNG_SIZES:
-        png = Path('brand') / brand / 'png' / str(size) / f'{base}.png'
+        png = Path('brand') / brand / kind / 'png' / str(size) / f'{base}.png'
         checked_png += 1
         if not png.exists():
             failures.append(f'{png}: missing PNG export')
             continue
         geom = subprocess.check_output(['identify', '-format', '%w %h', str(png)], text=True)
         w, h = map(int, geom.split())
-        ew, eh = expected_png_size(vw, vh, size, square)
+        ew, eh = expected_png_size(vw, vh, size, kind)
         if abs(w - ew) > PNG_SIZE_TOL or abs(h - eh) > PNG_SIZE_TOL:
-            mode = 'square' if square else 'natural'
+            mode = 'quadratic' if kind == 'logo' else 'shorter-side'
             failures.append(
                 f'{png}: expected {mode} {ew}x{eh}, got {w}x{h}'
             )
 
 checked_ico = 0
-for brand, base, vw, vh, square in assets:
-    ico = Path('brand') / brand / 'ico' / f'{base}.ico'
-    if not square:
-        if ico.exists():
-            failures.append(f'{ico}: unexpected ICO for natural-aspect asset')
+for brand, kind, base, vw, vh in assets:
+    if kind != 'logo':
+        stray = list((Path('brand') / brand / 'banner' / 'ico').glob(f'**/{base}.ico'))
+        for ico in stray:
+            failures.append(f'{ico}: banners are PNG only')
         continue
-    checked_ico += 1
-    if not ico.exists():
-        failures.append(f'{ico}: missing ICO export')
-        continue
-    info = subprocess.check_output(['identify', str(ico)], text=True)
-    found = set()
-    for line in info.splitlines():
-        m = re.search(r'\s(\d+)x(\d+)\s', line)
-        if m and m.group(1) == m.group(2):
-            found.add(int(m.group(1)))
-    missing = [s for s in ICO_SIZES if s not in found]
-    if missing:
-        failures.append(f'{ico}: missing embedded sizes {missing} (found {sorted(found)})')
+    for size in ICO_SIZES:
+        ico = Path('brand') / brand / 'logo' / 'ico' / str(size) / f'{base}.ico'
+        checked_ico += 1
+        if not ico.exists():
+            failures.append(f'{ico}: missing ICO export')
+            continue
+        info = subprocess.check_output(['identify', str(ico)], text=True)
+        found = []
+        for line in info.splitlines():
+            match = re.search(r'\s(\d+)x(\d+)\s', line)
+            if match:
+                found.append((int(match.group(1)), int(match.group(2))))
+        if found != [(size, size)]:
+            failures.append(f'{ico}: expected one {size}x{size} image, got {found}')
 
-for loose in Path('brand').glob('*/png/*.png'):
+for loose in list(Path('brand').glob('*/logo/png/*.png')) + list(Path('brand').glob('*/banner/png/*.png')):
     failures.append(f'{loose}: unexpected flat PNG; use png/<size>/')
 
-# helpwave mark must ship transparent, on-white, and inverted on-black.
-required_helpwave = {'mark', 'mark-on-white', 'mark-on-black', 'mark-white'}
-helpwave_bases = {base for brand, base, *_ in assets if brand == 'helpwave'}
+for loose in Path('brand').glob('*/logo/ico/*.ico'):
+    failures.append(f'{loose}: unexpected flat ICO; use ico/<size>/')
+
+for ico in Path('brand').glob('*/logo/ico/*/*.ico'):
+    if ico.parent.name not in {str(size) for size in ICO_SIZES}:
+        failures.append(f'{ico}: size {ico.parent.name} is not in ICO_SIZES')
+
+for kind in ('logo', 'banner'):
+    for exported in list(Path('brand').glob(f'*/{kind}/png/*/*.png')) + list(Path('brand').glob(f'*/{kind}/ico/*/*.ico')):
+        source = exported.parents[2] / 'svg' / f'{exported.stem}.svg'
+        if not source.exists():
+            failures.append(f'{exported}: no SVG source')
+
+required_helpwave = {'logo', 'logo-white', 'logo-on-white', 'logo-white-on-black'}
+helpwave_bases = {base for brand, kind, base, *_ in assets if brand == 'helpwave' and kind == 'logo'}
 missing_hw = sorted(required_helpwave - helpwave_bases)
 if missing_hw:
     failures.append(f'helpwave: missing required logo variants {missing_hw}')
@@ -234,6 +269,6 @@ if failures:
 
 print(
     f'brand check passed: {checked_svg} SVG cutouts, '
-    f'{checked_png} PNGs (square + natural), {checked_ico} square ICOs'
+    f'{checked_png} PNGs, {checked_ico} quadratic ICOs'
 )
 PY
