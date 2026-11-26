@@ -1,4 +1,6 @@
-# helpwave**Open healthcare operations platform for Europe.**
+# helpwave
+
+**Open healthcare operations platform for Europe.**
 
 helpwave maps real clinical workflows, surfaces hidden bottlenecks, and helps teams rebuild processes so every shift gets faster, safer, and more aligned. Open-source · modular · live in ambulatory and stationary care.
 
