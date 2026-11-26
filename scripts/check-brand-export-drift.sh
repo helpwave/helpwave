@@ -18,12 +18,14 @@ IM = "magick" if subprocess.call(
     stderr=subprocess.DEVNULL,
 ) == 0 else "convert"
 
-roots = [
-    Path("brand/helpwave/png"),
-    Path("brand/helpwave/ico"),
-    Path("brand/app-zum-doc/png"),
-    Path("brand/app-zum-doc/ico"),
-]
+roots: list[Path] = []
+for brand in sorted(path for path in Path("brand").iterdir() if path.is_dir()):
+    logo_svgs = list((brand / "logo" / "svg").glob("*.svg"))
+    banner_svgs = list((brand / "banner" / "svg").glob("*.svg"))
+    if logo_svgs:
+        roots.extend((brand / "logo" / "png", brand / "logo" / "ico"))
+    if banner_svgs:
+        roots.append(brand / "banner" / "png")
 
 
 def pixel_sig(data: bytes, suffix: str) -> bytes:

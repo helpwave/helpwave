@@ -4,11 +4,12 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-# Longest-side (natural) or square canvas size ladder.
-PNG_SIZES=(${PNG_SIZES:-16 32 48 64 128 180 192 256 512 1024})
-# Embedded sizes for square favicon ICOs only.
-ICO_SIZES=(${ICO_SIZES:-16 32 48 64 128 256})
-SQUARE_RATIO_TOL="${SQUARE_RATIO_TOL:-0.08}"
+# Logo PNGs are square. Banner PNGs use this value as the shorter side.
+# SIZES is the default ladder. PNG_SIZES and ICO_SIZES override it.
+DEFAULT_SIZES=(16 32 48 64 128 180 192 256 512 1024)
+SIZES=(${SIZES:-${DEFAULT_SIZES[*]}})
+PNG_SIZES=(${PNG_SIZES:-${SIZES[*]}})
+ICO_SIZES=(${ICO_SIZES:-${SIZES[*]}})
 
 BACKEND=""
 if command -v rsvg-convert >/dev/null 2>&1; then
@@ -31,6 +32,7 @@ else
 fi
 
 echo "using ${BACKEND} + ${IM}"
+echo "sizes: ${SIZES[*]}"
 echo "png sizes: ${PNG_SIZES[*]}"
 echo "ico sizes: ${ICO_SIZES[*]}"
 
@@ -39,9 +41,14 @@ viewbox_size() {
   python3 - "$src" <<'PY'
 import re, sys
 text = open(sys.argv[1], encoding="utf-8").read()
-m = re.search(r'viewBox="0 0 ([0-9.]+) ([0-9.]+)"', text)
-if not m:
-    m = re.search(r'width="([0-9.]+)"[^>]*height="([0-9.]+)"', text)
+m = re.search(
+    r'viewBox="([0-9.+-eE]+)\s+([0-9.+-eE]+)\s+([0-9.+-eE]+)\s+([0-9.+-eE]+)"',
+    text,
+)
+if m:
+    print(float(m.group(3)), float(m.group(4)))
+    raise SystemExit(0)
+m = re.search(r'width="([0-9.]+)"[^>]*height="([0-9.]+)"', text)
 if not m:
     raise SystemExit(f"cannot read size from {sys.argv[1]}")
 print(float(m.group(1)), float(m.group(2)))
@@ -61,20 +68,14 @@ background_for() {
   fi
 }
 
-# Square canvas for near-square artwork (circles, icons, AZD logos).
-# Natural aspect for wide marks / banners — size is the longer side.
-is_square_export() {
-  local base="$1"
-  local vw="$2"
-  local vh="$3"
-  if [[ "$base" == circle* || "$base" == icon* ]]; then
-    return 0
-  fi
-  python3 - "$vw" "$vh" "$SQUARE_RATIO_TOL" <<'PY'
+is_quadratic() {
+  local vw="$1"
+  local vh="$2"
+  python3 - "$vw" "$vh" <<'PY'
 import sys
-vw, vh, tol = map(float, sys.argv[1:4])
-ratio = max(vw, vh) / min(vw, vh)
-sys.exit(0 if ratio <= 1.0 + tol else 1)
+vw, vh = map(float, sys.argv[1:3])
+limit = max(vw, vh) * 1e-4
+sys.exit(0 if abs(vw - vh) <= limit else 1)
 PY
 }
 
@@ -96,11 +97,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-src, dest, size_s, vw_s, vh_s, bg, backend, im, square_s = sys.argv[1:10]
+src, dest, size_s, vw_s, vh_s, bg, backend, im, kind = sys.argv[1:10]
 size = int(size_s)
 vw, vh = float(vw_s), float(vh_s)
-square = square_s == "1"
-scale = size / max(vw, vh)
+square = kind == "logo"
+edge = max(vw, vh) if square else min(vw, vh)
+scale = size / edge
 rw = max(1, int(round(vw * scale)))
 rh = max(1, int(round(vh * scale)))
 tmp = Path(dest).with_suffix(".tmp.png")
@@ -168,35 +170,50 @@ PY
 }
 
 export_ico() {
-  local png_root="$1"
-  local ico_path="$2"
-  local base="$3"
-  shift 3
-  local sizes=("$@")
+  local src_png="$1"
+  local dest="$2"
+  mkdir -p "$(dirname "$dest")"
+  python3 - "$src_png" "$dest" <<'PY'
+import struct
+import sys
+from pathlib import Path
 
-  mkdir -p "$(dirname "$ico_path")"
-
-  local inputs=()
-  local size
-  for size in "${sizes[@]}"; do
-    inputs+=("${png_root}/${size}/${base}.png")
-  done
-
-  "$IM" "${inputs[@]}" -strip "$ico_path"
+src, dest = sys.argv[1:]
+png = Path(src).read_bytes()
+if not png.startswith(b"\x89PNG\r\n\x1a\n") or png[12:16] != b"IHDR":
+    raise SystemExit(f"{src} is not a PNG")
+width = int.from_bytes(png[16:20], "big")
+height = int.from_bytes(png[20:24], "big")
+entry_width = 0 if width >= 256 else width
+entry_height = 0 if height >= 256 else height
+header = struct.pack("<HHH", 0, 1, 1)
+entry = struct.pack("<BBBBHHII", entry_width, entry_height, 0, 0, 1, 32, len(png), 22)
+Path(dest).write_bytes(header + entry + png)
+PY
 }
 
-export_brand() {
+export_group() {
   local brand_dir="$1"
-  local svg_dir="${brand_dir}/svg"
-  local png_dir="${brand_dir}/png"
-  local ico_dir="${brand_dir}/ico"
+  local kind="$2"
+  local svg_dir="${brand_dir}/${kind}/svg"
+  local png_dir="${brand_dir}/${kind}/png"
+  local ico_dir="${brand_dir}/${kind}/ico"
   local count_svg=0
   local count_png=0
   local count_ico=0
+  local -A png_size_set=()
+  local size
+  for size in "${PNG_SIZES[@]}"; do
+    png_size_set["$size"]=1
+  done
 
-  find "$png_dir" -maxdepth 1 -type f -name '*.png' -delete 2>/dev/null || true
-  mkdir -p "$ico_dir"
-  find "$ico_dir" -maxdepth 1 -type f -name '*.ico' -delete 2>/dev/null || true
+  rm -rf "$png_dir"
+  if [[ "$kind" == "logo" ]]; then
+    rm -rf "$ico_dir"
+  elif [[ -d "$ico_dir" ]]; then
+    echo "${kind} assets do not get ICOs: ${ico_dir}" >&2
+    exit 1
+  fi
 
   while IFS= read -r -d '' src; do
     local base
@@ -207,33 +224,86 @@ export_brand() {
     dims="$(viewbox_size "$src")"
     local vw="${dims%% *}"
     local vh="${dims##* }"
-    local square=0
-    local mode="natural"
-    if is_square_export "$base" "$vw" "$vh"; then
-      square=1
-      mode="square"
+    if [[ "$kind" == "logo" ]] && ! is_quadratic "$vw" "$vh"; then
+      echo "${src}: logo SVG must be quadratic (viewBox ${vw}x${vh})" >&2
+      exit 1
     fi
     local size
 
     for size in "${PNG_SIZES[@]}"; do
-      export_png "$src" "${png_dir}/${size}/${base}.png" "$size" "$bg" "$square"
+      export_png "$src" "${png_dir}/${size}/${base}.png" "$size" "$bg" "$kind"
       count_png=$((count_png + 1))
     done
 
-    if [[ "$square" -eq 1 ]]; then
-      export_ico "$png_dir" "${ico_dir}/${base}.ico" "$base" "${ICO_SIZES[@]}"
-      count_ico=$((count_ico + 1))
-      echo "exported ${base} (${#PNG_SIZES[@]} png ${mode} + ico)"
+    if [[ "$kind" == "logo" ]]; then
+      for size in "${ICO_SIZES[@]}"; do
+        local png_src="${png_dir}/${size}/${base}.png"
+        local cleanup=""
+        if [[ -z "${png_size_set[$size]:-}" ]]; then
+          cleanup="$(mktemp --suffix=.png)"
+          export_png "$src" "$cleanup" "$size" "$bg" "logo"
+          png_src="$cleanup"
+        fi
+        export_ico "$png_src" "${ico_dir}/${size}/${base}.ico"
+        if [[ -n "$cleanup" ]]; then
+          rm -f "$cleanup"
+        fi
+        count_ico=$((count_ico + 1))
+      done
+      echo "exported ${kind}/${base} (${#PNG_SIZES[@]} png + ${#ICO_SIZES[@]} ico)"
     else
-      echo "exported ${base} (${#PNG_SIZES[@]} png ${mode})"
+      echo "exported ${kind}/${base} (${#PNG_SIZES[@]} png, shorter side)"
     fi
     count_svg=$((count_svg + 1))
   done < <(find "$svg_dir" -type f -name '*.svg' -print0 | sort -z)
 
-  echo "brand ${brand_dir}: ${count_svg} svg → ${count_png} png, ${count_ico} ico"
+  echo "brand ${brand_dir}/${kind}: ${count_svg} svg → ${count_png} png, ${count_ico} ico"
 }
 
-export_brand "brand/helpwave"
-export_brand "brand/app-zum-doc"
+if [[ $# -gt 0 ]]; then
+  brand_dirs=()
+  for name in "$@"; do
+    if [[ "$name" == brand/* ]]; then
+      brand_dirs+=("${name%/}")
+    else
+      brand_dirs+=("brand/${name%/}")
+    fi
+  done
+else
+  shopt -s nullglob
+  brand_dirs=(brand/*/)
+  shopt -u nullglob
+fi
+
+if [[ ${#brand_dirs[@]} -eq 0 ]]; then
+  echo "No brand directories under brand/" >&2
+  exit 1
+fi
+
+exported_any=0
+for brand_dir in "${brand_dirs[@]}"; do
+  brand_dir="${brand_dir%/}"
+  kind_found=0
+  for kind in logo banner; do
+    svg_dir="${brand_dir}/${kind}/svg"
+    if [[ ! -d "$svg_dir" ]]; then
+      continue
+    fi
+    if ! find "$svg_dir" -type f -name '*.svg' -print -quit | grep -q .; then
+      continue
+    fi
+    export_group "$brand_dir" "$kind"
+    kind_found=1
+    exported_any=1
+  done
+  if [[ "$kind_found" -ne 1 ]]; then
+    echo "skip ${brand_dir}: no logo/svg or banner/svg" >&2
+  fi
+done
+
+if [[ "$exported_any" -ne 1 ]]; then
+  echo "No SVG sources found under brand/*/logo/svg or brand/*/banner/svg" >&2
+  exit 1
+fi
 
 echo "done"

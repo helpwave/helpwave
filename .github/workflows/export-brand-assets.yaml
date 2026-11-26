@@ -44,7 +44,7 @@ jobs:
       - name: Pack brand kit
         run: |
           mkdir -p /tmp/brand-kit
-          cp -a brand/helpwave brand/app-zum-doc brand/README.md /tmp/brand-kit/
+          cp -a brand/. /tmp/brand-kit/
           tar -C /tmp -czf brand-kit.tar.gz brand-kit
 
       - name: Upload brand kit artifact

@@ -6,10 +6,10 @@ Public marketing and press-facing media for helpwave and App zum Doc.
 
 Primary download location: [`../brand/`](../brand/)
 
-| Brand | SVG | PNG | ICO |
-|-------|-----|-----|-----|
-| helpwave | [`../brand/helpwave/svg/`](../brand/helpwave/svg/) | [`../brand/helpwave/png/`](../brand/helpwave/png/) | [`../brand/helpwave/ico/`](../brand/helpwave/ico/) |
-| App zum Doc | [`../brand/app-zum-doc/svg/`](../brand/app-zum-doc/svg/) | [`../brand/app-zum-doc/png/`](../brand/app-zum-doc/png/) | [`../brand/app-zum-doc/ico/`](../brand/app-zum-doc/ico/) |
+| Brand | Logos | Banners |
+|-------|--------|---------|
+| helpwave | [`../brand/helpwave/logo/`](../brand/helpwave/logo/) | [`../brand/helpwave/banner/`](../brand/helpwave/banner/) |
+| App zum Doc | [`../brand/app-zum-doc/logo/`](../brand/app-zum-doc/logo/) | — |
 
 Use cases: slides, social avatars, app stores, print, dark/light UI, banners.
 
